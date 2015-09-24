@@ -1,0 +1,48 @@
+﻿<html>
+<head>
+</head>
+<body>
+<a href="me.bpg">例子1下载</a>
+<a href="me2.bpg">例子2下载</a>
+<input id="fileInput" type="file"/>
+<canvas id="mycanvas"></canvas>
+<script src="bpgdec8.js"></script>
+<script>
+    var img, canvas, ctx, upload;
+
+    canvas = document.getElementById("mycanvas");
+    ctx = canvas.getContext("2d");
+    upload = document.getElementsByTagName('input')[0];
+
+    upload.onchange = function(e) {
+        e.preventDefault();
+
+        var file = upload.files[0],
+            reader = new FileReader();
+        reader.onload = function(event) {
+
+            img = new BPGDecoder(ctx);
+            img.onload = function() {
+                /* draw the image to the canvas */
+                canvas.width = this.imageData.width;
+                canvas.height = this.imageData.height;
+                ctx.putImageData(this.imageData, 0, 0);
+            };
+            img.load(event.target.result);
+        };
+        reader.readAsDataURL(file);
+        return false;
+    };
+
+    (function() {
+        var img, canvas, ctx;
+
+
+    })();
+    //
+
+
+</script>
+<img id="myPic" src="me.bpg"/>
+</body>
+</html>
